@@ -2,6 +2,11 @@
 
 This project demonstrates how to integrate PayPal's REST API in a sample catering application using sandbox mode. It covers authentication, token retrieval, and basic security practices.
 
+## Video showcase
+
+[click here for youtube video](https://youtu.be/mYpR2wNF-9A)
+
+
 ## 🚀 Features
 
 - OAuth 2.0 authentication with Client ID & Secret
