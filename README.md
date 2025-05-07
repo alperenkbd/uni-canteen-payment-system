@@ -1,54 +1,41 @@
-# React + TypeScript + Vite
+# Hull Uni Catering – PayPal Integration (Sandbox)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project demonstrates how to integrate PayPal's REST API in a sample catering application using sandbox mode. It covers authentication, token retrieval, and basic security practices.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- OAuth 2.0 authentication with Client ID & Secret
+- Secure token handling
+- REST API integration with PayPal Sandbox
+- Postman tests and screenshots included
+- Example use-case: Hull Uni Catering App
 
-## Expanding the ESLint configuration
+## 🛠 Requirements
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- PayPal Developer Account
+- Node.js or backend environment
+- Postman (for testing)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## ⚙️ How to Use
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+1. Clone the repository.
+2. Set up your sandbox business account on the [PayPal Developer Dashboard](https://developer.paypal.com/).
+3. Get your **Client ID** and **Secret Key**.
+4. Use Postman to retrieve an access token:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+POST https://api-m.sandbox.paypal.com/v1/oauth2/token
+Auth: Basic Auth (Client ID & Secret)
+Body: grant_type=client_credentials
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+
+5. Use the returned access token in your API requests for authenticated actions.
+
+## 🔐 Security Notes
+
+- Never expose your Client Secret in the codebase.
+- Use environment variables to store credentials securely.
+- Enable logging and key rotation on PayPal Developer Dashboard.
+
+## 📄 License
+
+This project is licensed under the MIT License.
