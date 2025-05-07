@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import './App.css'
 import Checkout from './components/Checkout'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export interface Product {
   id: number;
@@ -26,6 +28,10 @@ const products: Product[] = [
 function App() {
   const [basket, setBasket] = useState<{ product: Product; quantity: number }[]>([]);
   const [showCheckout, setShowCheckout] = useState(false);
+
+  const clearBasket = () => {
+    setBasket([]);
+  };
 
   const addToBasket = (product: Product) => {
     setBasket(prevBasket => {
@@ -66,6 +72,18 @@ function App() {
 
   return (
     <div className="app-container">
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <div className="header">
         <h1>University Catering Automation Application</h1>
         <div className="basket-icon" onClick={() => setShowCheckout(true)}>
@@ -97,6 +115,7 @@ function App() {
         <Checkout
           basket={basket}
           onClose={() => setShowCheckout(false)}
+          onPaymentSuccess={clearBasket}
         />
       )}
     </div>

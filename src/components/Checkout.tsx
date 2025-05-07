@@ -2,13 +2,15 @@ import { useState } from 'react';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import { Product } from '../App';
 import { PAYPAL_CLIENT_ID } from '../config';
+import { toast } from 'react-toastify';
 
 interface CheckoutProps {
   basket: { product: Product; quantity: number }[];
   onClose: () => void;
+  onPaymentSuccess: () => void;
 }
 
-function Checkout({ basket, onClose }: CheckoutProps) {
+function Checkout({ basket, onClose, onPaymentSuccess }: CheckoutProps) {
   const [paymentMethod, setPaymentMethod] = useState('paypal');
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -22,7 +24,8 @@ function Checkout({ basket, onClose }: CheckoutProps) {
     // Simulate cash payment processing
     setTimeout(() => {
       setIsProcessing(false);
-      alert('Payment successful! Please proceed to the cashier.');
+      toast.success('Payment successful! Please proceed to the cashier.');
+      onPaymentSuccess();
       onClose();
     }, 2000);
   };
@@ -66,11 +69,12 @@ function Checkout({ basket, onClose }: CheckoutProps) {
     try {
       const order = await actions.order.capture();
       console.log('Order completed:', order);
-      alert('Payment successful! Thank you for your purchase.');
+      toast.success('Payment successful! Thank you for your purchase.');
+      onPaymentSuccess();
       onClose();
     } catch (error) {
       console.error('Payment failed:', error);
-      alert('Payment failed. Please try again.');
+      toast.error('Payment failed. Please try again.');
     }
   };
 
@@ -135,7 +139,7 @@ function Checkout({ basket, onClose }: CheckoutProps) {
                 onApprove={onApprove}
                 onError={(err) => {
                   console.error('PayPal error:', err);
-                  alert('An error occurred with PayPal. Please try again.');
+                  toast.error('An error occurred with PayPal. Please try again.');
                 }}
               />
             </PayPalScriptProvider>
